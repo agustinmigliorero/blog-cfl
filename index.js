@@ -15,7 +15,7 @@ app.use(express.json());
 
 //rutas
 const rutasUsuarios = require("./rutas/usuarios");
-app.use("/api/usuarios", rutasUsuarios);
+app.use("/api/usuarios2", rutasUsuarios);
 
 //rutas
 
