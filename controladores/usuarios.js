@@ -1,4 +1,5 @@
 const Usuario = require("../modelos/usuario");
+const Publicacion = require("../modelos/publicacion");
 
 const crearUsuario = async (req, res) => {
   const { nombre, password, email } = req.body;
@@ -14,13 +15,16 @@ const verUsuarios = async (req, res) => {
 
 const verUsuario = async (req, res) => {
   const { id } = req.params;
-  const usuario = await Usuario.findById(id);
+  const usuario = await Usuario.findById(id).populate("publicaciones");
   res.json(usuario);
 };
 
 const eliminarUsuario = async (req, res) => {
   const { id } = req.params;
   const usuario = await Usuario.findByIdAndDelete(id);
+  const publicaciones = await Publicacion.deleteMany({
+    usuario: id,
+  });
   res.json({ usuario, mensaje: "Usuario eliminado!" });
 };
 
