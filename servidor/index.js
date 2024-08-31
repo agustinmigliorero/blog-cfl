@@ -10,6 +10,21 @@ db.once("open", function () {
   console.log("Base de datos conectada!");
 });
 
+//cors
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With, Content-Type, Accept, Origin, Authorization"
+  );
+  next();
+});
+
+//cors
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
