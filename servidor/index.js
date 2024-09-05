@@ -40,3 +40,19 @@ app.use("/api/publicaciones", rutasPublicaciones);
 app.listen(3000, function () {
   console.log("Servidor abierto en puerto 3000");
 });
+
+app.get("/ruta", function (req, res) {
+  res.send("Hola mundo");
+});
+
+fetch("http://localhost:3000/api/usuarios/", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    nombre: "Prueba",
+    password: "123",
+    email: "prueba@prueba",
+  }),
+});
