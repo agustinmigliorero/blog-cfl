@@ -1,22 +1,44 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import Boton from "./componentes/Boton";
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
-import VerUsuarios from "./paginas/VerUsuarios";
-import Formulario from "./paginas/Formulario";
 
 function App() {
+  const [publicaciones, setPublicaciones] = useState([]);
+
+  const fetchPublicaciones = async () => {
+    const res = await fetch("http://localhost:3000/api/publicaciones");
+    const data = await res.json();
+    setPublicaciones(data);
+    console.log(data);
+  };
+
+  useEffect(() => {
+    fetchPublicaciones();
+  }, []);
+
+  const mostrarFilas = () => {
+    return publicaciones.map((publicacion, index) => (
+      <tr key={index}>
+        <td>{publicacion._id}</td>
+        <td>{publicacion.usuario}</td>
+        <td>{publicacion.titulo}</td>
+        <td>{publicacion.texto}</td>
+      </tr>
+    ));
+  };
+
   return (
     <>
-      <Routes>
-        {/* <Route path="/" element={<VerUsuarios />} /> */}
-        {/* <Route path="/ver-usuarios" element={<VerUsuarios />} /> */}
-        <Route path="/formulario" element={<Formulario />} />
-      </Routes>
-
-      <Formulario />
+      <h1>Publicaciones!</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Titulo</th>
+            <th>Texto</th>
+          </tr>
+        </thead>
+        <tbody>{mostrarFilas()}</tbody>
+      </table>
     </>
   );
 }

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function VerUsuarios() {
+  const { id, email } = useParams();
   const [usuarios, setUsuarios] = useState([]);
 
   const fetchUsuarios = async () => {

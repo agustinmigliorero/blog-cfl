@@ -4,6 +4,7 @@ const usuarioSchema = new mongoose.Schema({
   nombre: { type: String, require: true },
   email: { type: String, require: true },
   password: { type: String, require: true },
+  facebookId: { type: String, unique: true },
   publicaciones: [{ type: mongoose.Schema.Types.ObjectId, ref: "Publicacion" }],
 });
 

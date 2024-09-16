@@ -50,7 +50,3 @@ module.exports = {
   editarPublicacion,
   eliminarPublicacion,
 };
-
-usuario = {
-  publicaciones: ["22", "50", "15"],
-};

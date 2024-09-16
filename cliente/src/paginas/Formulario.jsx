@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Formulario() {
   const [nombre, setNombre] = useState("");
@@ -23,6 +24,7 @@ function Formulario() {
   return (
     <>
       <form onSubmit={manejarFormulario}>
+        <Link to={"/"}>Mi link!</Link>
         <input
           type="text"
           placeholder="Nombre"

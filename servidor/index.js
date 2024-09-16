@@ -1,6 +1,11 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const session = require("express-session");
+const passport = require("passport");
+const FacebookStrategy = require("passport-facebook").Strategy;
+require("dotenv").config();
+const Usuario = require("./modelos/usuario");
 
 mongoose.connect("mongodb://127.0.0.1:27017/blog");
 const db = mongoose.connection;
@@ -28,6 +33,58 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+//passport y session
+
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: process.env.CALLBACK_URL,
+    },
+    async function (accessToken, refreshToken, profile, done) {
+      console.log(profile);
+      const usuarioEncontrado = await Usuario.findOne({
+        facebookId: profile.id,
+      });
+
+      if (usuarioEncontrado) {
+        return done(null, usuarioEncontrado);
+      } else {
+        const nuevoUsuario = new Usuario({
+          nombre: profile.displayName,
+          facebookId: profile.id,
+        });
+        await nuevoUsuario.save();
+        return done(null, nuevoUsuario);
+      }
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+passport.deserializeUser((user, done) => {
+  const usuario = Usuario.findById(user._id);
+  console.log(user);
+
+  done(null, user);
+});
+
+//passport y session
+
 //rutas
 const rutasUsuarios = require("./rutas/usuarios");
 app.use("/api/usuarios", rutasUsuarios);
@@ -39,20 +96,4 @@ app.use("/api/publicaciones", rutasPublicaciones);
 
 app.listen(3000, function () {
   console.log("Servidor abierto en puerto 3000");
-});
-
-app.get("/ruta", function (req, res) {
-  res.send("Hola mundo");
-});
-
-fetch("http://localhost:3000/api/usuarios/", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    nombre: "Prueba",
-    password: "123",
-    email: "prueba@prueba",
-  }),
 });

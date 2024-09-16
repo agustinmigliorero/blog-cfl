@@ -39,10 +39,21 @@ const editarUsuario = async (req, res) => {
   res.json({ usuario, mensaje: "Usuario actualizado!" });
 };
 
+const autenticarUsuario = async (req, res) => {
+  req.login(req.user, (err) => {
+    if (err) {
+      console.log(err);
+    }
+
+    res.redirect("http://localhost:5173/");
+  });
+};
+
 module.exports = {
   crearUsuario,
   verUsuarios,
   verUsuario,
   eliminarUsuario,
   editarUsuario,
+  autenticarUsuario,
 };
