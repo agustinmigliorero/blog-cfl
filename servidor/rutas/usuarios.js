@@ -11,14 +11,19 @@ const router = express.Router();
 const passport = require("passport");
 const Usuario = require("../modelos/usuario");
 
-router.get("/facebook", passport.authenticate("facebook"));
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
 
 router.get(
-  "/facebook/autenticar",
-  passport.authenticate("facebook", { scope: ["profile"] }),
+  "/google/autenticar",
+  passport.authenticate("google", { scope: ["profile", "email"] }),
   autenticarUsuario
 );
 router.get("/", verUsuarios);
+router.get("/usuario-logeado", usuarioLogeado);
+router.get("/desconectarse", desconectarUsuario);
 router.get("/:id", verUsuario);
 router.post("/", crearUsuario);
 router.put("/:id", editarUsuario);

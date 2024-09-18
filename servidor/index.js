@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
-const FacebookStrategy = require("passport-facebook").Strategy;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 require("dotenv").config();
 const Usuario = require("./modelos/usuario");
 
@@ -47,7 +47,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(
-  new FacebookStrategy(
+  new GoogleStrategy(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
@@ -55,8 +55,9 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, done) {
       console.log(profile);
+
       const usuarioEncontrado = await Usuario.findOne({
-        facebookId: profile.id,
+        googleId: profile.id,
       });
 
       if (usuarioEncontrado) {
@@ -64,7 +65,8 @@ passport.use(
       } else {
         const nuevoUsuario = new Usuario({
           nombre: profile.displayName,
-          facebookId: profile.id,
+          googleId: profile.id,
+          email: profile.emails[0].value,
         });
         await nuevoUsuario.save();
         return done(null, nuevoUsuario);
