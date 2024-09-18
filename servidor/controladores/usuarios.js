@@ -49,6 +49,24 @@ const autenticarUsuario = async (req, res) => {
   });
 };
 
+const usuarioLogeado = async (req, res) => {
+  if (req.user) {
+    const usuario = await Usuario.findById(req.user._id);
+    res.json({ usuario, logeado: true });
+  } else {
+    res.json({ logeado: false });
+  }
+};
+
+const desconectarUsuario = async (req, res) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.json({ logeado: false, usuario: {}, mensaje: "Usuario desconectado!" });
+  });
+};
+
 module.exports = {
   crearUsuario,
   verUsuarios,
@@ -56,4 +74,6 @@ module.exports = {
   eliminarUsuario,
   editarUsuario,
   autenticarUsuario,
+  desconectarUsuario,
+  usuarioLogeado,
 };

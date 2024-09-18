@@ -5,6 +5,8 @@ const {
   editarUsuario,
   eliminarUsuario,
   autenticarUsuario,
+  desconectarUsuario,
+  usuarioLogeado,
 } = require("../controladores/usuarios");
 const express = require("express");
 const router = express.Router();
