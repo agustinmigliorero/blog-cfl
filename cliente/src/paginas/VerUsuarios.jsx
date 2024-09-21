@@ -1,47 +1,44 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import "../App.css";
 
 function VerUsuarios() {
-  const { id, email } = useParams();
   const [usuarios, setUsuarios] = useState([]);
 
   const fetchUsuarios = async () => {
     const response = await fetch("http://localhost:3000/api/usuarios");
     const data = await response.json();
-
     setUsuarios(data);
-  };
-
-  const mostrarFilas = () => {
-    let filas = usuarios.map((usuario) => {
-      return (
-        <tr>
-          <td>{usuario._id}</td>
-          <td>{usuario.nombre}</td>
-          <td>{usuario.password}</td>
-          <td>{usuario.email}</td>
-        </tr>
-      );
-    });
-    return filas;
   };
 
   useEffect(() => {
     fetchUsuarios();
   }, []);
 
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Nombre</th>
-          <th>Password</th>
-          <th>Email</th>
+  const mostrarFilas = () => {
+    return usuarios.map((usuario) => {
+      return (
+        <tr key={usuario._id}>
+          <td>{usuario._id}</td>
+          <td>{usuario.nombre}</td>
+          <td>{usuario.email}</td>
         </tr>
-      </thead>
-      <tbody>{mostrarFilas()}</tbody>
-    </table>
+      );
+    });
+  };
+
+  return (
+    <>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>{mostrarFilas()}</tbody>
+      </table>
+    </>
   );
 }
 
