@@ -5,6 +5,7 @@ const session = require("express-session");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 require("dotenv").config();
+const bodyParser = require("body-parser");
 const Usuario = require("./modelos/usuario");
 
 mongoose.connect("mongodb://127.0.0.1:27017/blog");
