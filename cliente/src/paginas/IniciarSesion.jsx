@@ -16,7 +16,7 @@ function IniciarSesion({ usuarioLogeado, setUsuarioLogeado }) {
   };
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>Iniciar sesion</h1>
+      <h1>Iniciar sesion!!!</h1>
       {usuarioLogeado.logeado ? (
         <>
           <h1>Bienvenido! {usuarioLogeado.usuario.nombre}</h1>
