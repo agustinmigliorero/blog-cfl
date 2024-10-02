@@ -19,7 +19,9 @@ function IniciarSesion({ usuarioLogeado, setUsuarioLogeado }) {
       <h1>Iniciar sesion!!!</h1>
       {usuarioLogeado.logeado ? (
         <>
-          <h1>Bienvenido! {usuarioLogeado.usuario.nombre}</h1>
+          <h1 style={{ textAlign: "center", color: "blue" }}>
+            Bienvenido! {usuarioLogeado.usuario.nombre}
+          </h1>
 
           <button
             style={{
