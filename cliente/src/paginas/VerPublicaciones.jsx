@@ -33,6 +33,8 @@ function VerPublicaciones() {
 
   return (
     <>
+      <h1>Publicaciones</h1>
+      <Link to="/publicaciones/crear">Crear publicacion</Link>
       <table>
         <thead>
           <tr>

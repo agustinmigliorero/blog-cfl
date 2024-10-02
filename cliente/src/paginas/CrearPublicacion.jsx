@@ -1,62 +1,60 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CrearPublicacion({ usuarioLogeado }) {
-  const [titulo, setTitulo] = useState("");
-  const [texto, setTexto] = useState("");
   const navigate = useNavigate();
+  const [texto, setTexto] = useState("");
+  const [titulo, setTitulo] = useState("");
 
-  const manejarTexto = (e) => {
-    setTexto(e.target.value);
-  };
-
-  const manejarTitulo = (e) => {
-    setTitulo(e.target.value);
-  };
-
-  const enviarFormulario = (e) => {
+  const fetchCrearPublicacion = (e) => {
     e.preventDefault();
     if (!usuarioLogeado.logeado) {
       navigate("/");
     }
-    console.log(titulo, texto);
     fetch("http://localhost:3000/api/publicaciones", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        titulo: titulo,
-        texto: texto,
+        texto,
+        titulo,
         usuario: usuarioLogeado.usuario._id,
       }),
     })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
+      .then(function (res) {
+        console.log(res);
+        alert("Publicacion creada!");
         navigate("/publicaciones");
+      })
+      .catch((res) => {
+        alert("Error al crear publicacion!");
       });
   };
 
   return (
-    <form onSubmit={enviarFormulario}>
-      <input
-        type="text"
-        name="titulo"
-        value={titulo}
-        placeholder="Titulo"
-        onChange={manejarTitulo}
-      />
-      <input
-        type="text"
-        name="texto"
-        value={texto}
-        placeholder="Texto"
-        onChange={manejarTexto}
-      />
-      <button type="submit">Enviar</button>
-    </form>
+    <>
+      <h1>Crear publicacion!</h1>
+      <form onSubmit={fetchCrearPublicacion}>
+        <input
+          type="text"
+          placeholder="Titulo"
+          value={titulo}
+          onChange={function (e) {
+            setTitulo(e.target.value);
+          }}
+        />
+        <input
+          type="text"
+          placeholder="Texto"
+          value={texto}
+          onChange={(e) => {
+            setTexto(e.target.value);
+          }}
+        />
+        <input type="submit" value="Crear publicacion!" />
+      </form>
+    </>
   );
 }
 

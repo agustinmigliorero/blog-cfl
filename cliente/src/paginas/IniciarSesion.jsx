@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function IniciarSesion({ usuarioLogeado, setUsuarioLogeado }) {
   const navigate = useNavigate();
@@ -58,6 +58,20 @@ function IniciarSesion({ usuarioLogeado, setUsuarioLogeado }) {
           </button>
         </a>
       )}
+
+      <Link
+        style={{
+          marginTop: "20px",
+          color: "blue",
+          cursor: "pointer",
+          backgroundColor: "rgb(30, 30, 50)",
+          padding: "10px 20px",
+          borderRadius: "5px",
+        }}
+        to="/publicaciones"
+      >
+        Ir a publicaciones
+      </Link>
     </div>
   );
 }

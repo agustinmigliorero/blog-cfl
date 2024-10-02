@@ -5,6 +5,7 @@ const usuarioSchema = new mongoose.Schema({
   email: { type: String, require: true },
   password: { type: String, require: true },
   googleId: { type: String, unique: true },
+  imagen: { type: String },
   publicaciones: [{ type: mongoose.Schema.Types.ObjectId, ref: "Publicacion" }],
 });
 

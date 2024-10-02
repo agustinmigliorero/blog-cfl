@@ -68,6 +68,7 @@ passport.use(
           nombre: profile.displayName,
           googleId: profile.id,
           email: profile.emails[0].value,
+          imagen: profile.photos[0].value,
         });
         await nuevoUsuario.save();
         return done(null, nuevoUsuario);
@@ -81,8 +82,6 @@ passport.serializeUser((user, done) => {
 });
 passport.deserializeUser((user, done) => {
   const usuario = Usuario.findById(user._id);
-  console.log(user);
-
   done(null, user);
 });
 

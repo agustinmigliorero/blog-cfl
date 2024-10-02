@@ -3,9 +3,6 @@ const Usuario = require("../modelos/usuario");
 
 const crearPublicacion = async (req, res) => {
   const { usuario, titulo, texto } = req.body;
-  console.log(usuario);
-  console.log(titulo);
-  console.log(texto);
   const publicacion = new Publicacion({ usuario, titulo, texto });
   await publicacion.save();
   const usuarioActual = await Usuario.findById(publicacion.usuario);

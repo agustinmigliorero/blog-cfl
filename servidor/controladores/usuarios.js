@@ -25,7 +25,13 @@ const eliminarUsuario = async (req, res) => {
   const publicaciones = await Publicacion.deleteMany({
     usuario: id,
   });
-  res.json({ usuario, mensaje: "Usuario eliminado!" });
+  req.logout((error) => {
+    if (error) {
+      console.log(error);
+    } else {
+      res.json({ usuario, mensaje: "Usuario eliminado!" });
+    }
+  });
 };
 
 const editarUsuario = async (req, res) => {
