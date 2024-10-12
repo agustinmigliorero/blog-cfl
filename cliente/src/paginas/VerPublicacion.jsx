@@ -17,6 +17,21 @@ function VerPublicacion() {
     fetchPublicacion();
   }, []);
 
+  const itemsComentarios = () => {
+    if (publicacion.comentarios) {
+      return publicacion.comentarios.map((comentario) => {
+        return (
+          <li
+            key={comentario._id}
+            style={{ listStyle: "none", border: "2px solid black" }}
+          >
+            <h4>{comentario.usuario.nombre}</h4>
+            {comentario.texto}
+          </li>
+        );
+      });
+    }
+  };
   return (
     <>
       <h1>Publicacion:</h1>
@@ -24,6 +39,7 @@ function VerPublicacion() {
       <h2>Texto: {publicacion.texto}</h2>
       <h2>ID: {publicacion._id}</h2>
       <h2>Nombre usuario: {publicacion.usuario.nombre}</h2>
+      <ul>{itemsComentarios()}</ul>
     </>
   );
 }

@@ -7,6 +7,7 @@ const usuarioSchema = new mongoose.Schema({
   googleId: { type: String, unique: true },
   imagen: { type: String },
   publicaciones: [{ type: mongoose.Schema.Types.ObjectId, ref: "Publicacion" }],
+  comentarios: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comentario" }],
 });
 
 module.exports = mongoose.model("Usuario", usuarioSchema);

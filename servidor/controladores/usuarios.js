@@ -1,5 +1,6 @@
 const Usuario = require("../modelos/usuario");
 const Publicacion = require("../modelos/publicacion");
+const Comentario = require("../modelos/comentario");
 
 const crearUsuario = async (req, res) => {
   const { nombre, password, email } = req.body;
@@ -15,7 +16,9 @@ const verUsuarios = async (req, res) => {
 
 const verUsuario = async (req, res) => {
   const { id } = req.params;
-  const usuario = await Usuario.findById(id).populate("publicaciones");
+  const usuario = await Usuario.findById(id)
+    .populate("publicaciones")
+    .populate("comentarios");
   res.json(usuario);
 };
 
@@ -23,6 +26,9 @@ const eliminarUsuario = async (req, res) => {
   const { id } = req.params;
   const usuario = await Usuario.findByIdAndDelete(id);
   const publicaciones = await Publicacion.deleteMany({
+    usuario: id,
+  });
+  const comentarios = await Comentario.deleteMany({
     usuario: id,
   });
   req.logout((error) => {
