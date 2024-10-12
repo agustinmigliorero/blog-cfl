@@ -6,6 +6,7 @@ import VerPublicaciones from "./paginas/VerPublicaciones";
 import VerPublicacion from "./paginas/VerPublicacion";
 import CrearPublicacion from "./paginas/CrearPublicacion";
 import IniciarSesion from "./paginas/IniciarSesion";
+import Navbar from "./componentes/Navbar";
 
 function App() {
   const [usuarios, setUsuarios] = useState([]);
@@ -13,6 +14,7 @@ function App() {
 
   return (
     <>
+      <Navbar></Navbar>
       <Routes>
         <Route
           path="/"
