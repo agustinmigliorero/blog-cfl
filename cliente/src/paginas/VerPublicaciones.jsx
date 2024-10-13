@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Card from "../componentes/Card";
 
 function VerPublicaciones() {
   const [publicaciones, setPublicaciones] = useState([]);
@@ -15,36 +16,31 @@ function VerPublicaciones() {
     fetchPublicaciones();
   }, []);
 
-  const mostrarFilas = () => {
-    let filas = publicaciones.map((publicacion, index) => {
+  const mostrarPublicaciones = () => {
+    return publicaciones.map((publicacion) => {
       return (
-        <tr key={index}>
-          <td>{publicacion._id}</td>
-          <td>{publicacion.titulo}</td>
-          <td>{publicacion.texto}</td>
-          <td>
-            <Link to={`/publicaciones/${publicacion._id}`}>Ver mas</Link>
-          </td>
-        </tr>
+        <div key={publicacion._id} className="col-12 col-md-6 col-lg-4">
+          <Card
+            titulo={publicacion.titulo}
+            texto={publicacion.texto}
+            textoBoton="Ver mas"
+            linkBoton={`/publicaciones/${publicacion._id}`}
+            autor={{
+              nombre: publicacion.usuario.nombre,
+              id: publicacion.usuario._id,
+            }}
+          ></Card>
+        </div>
       );
     });
-    return filas;
   };
 
   return (
     <>
-      <h1>Publicaciones</h1>
-      <Link to="/publicaciones/crear">Crear publicacion</Link>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Titulo</th>
-            <th>Texto</th>
-          </tr>
-        </thead>
-        <tbody>{mostrarFilas()}</tbody>
-      </table>
+      <div className="container mt-3">
+        <h1 className="text-center mt-3">Publicaciones</h1>
+        <div className="row m-auto mt-4">{mostrarPublicaciones()}</div>
+      </div>
     </>
   );
 }

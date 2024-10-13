@@ -7,6 +7,7 @@ import VerPublicacion from "./paginas/VerPublicacion";
 import CrearPublicacion from "./paginas/CrearPublicacion";
 import IniciarSesion from "./paginas/IniciarSesion";
 import Navbar from "./componentes/Navbar";
+import VerUsuario from "./paginas/VerUsuario";
 
 function App() {
   const [usuarios, setUsuarios] = useState([]);
@@ -14,7 +15,10 @@ function App() {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar
+        usuarioLogeado={usuarioLogeado}
+        setUsuarioLogeado={setUsuarioLogeado}
+      ></Navbar>
       <Routes>
         <Route
           path="/"
@@ -26,6 +30,8 @@ function App() {
           }
         ></Route>
         <Route path="/usuarios" element={<VerUsuarios></VerUsuarios>}></Route>
+
+        <Route path="/usuarios/:id" element={<VerUsuario></VerUsuario>}></Route>
 
         <Route
           path="/publicaciones"
@@ -41,7 +47,9 @@ function App() {
         ></Route>
         <Route
           path="/publicaciones/:id"
-          element={<VerPublicacion></VerPublicacion>}
+          element={
+            <VerPublicacion usuarioLogeado={usuarioLogeado}></VerPublicacion>
+          }
         ></Route>
       </Routes>
     </>
