@@ -13,7 +13,10 @@ const crearPublicacion = async (req, res) => {
 };
 
 const verPublicaciones = async (req, res) => {
-  const publicaciones = await Publicacion.find();
+  const publicaciones = await Publicacion.find().populate({
+    path: "usuario",
+    select: "nombre",
+  });
   res.json(publicaciones);
 };
 
