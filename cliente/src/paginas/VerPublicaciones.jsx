@@ -39,6 +39,12 @@ function VerPublicaciones() {
     <>
       <div className="container mt-3">
         <h1 className="text-center mt-3">Publicaciones</h1>
+        <Link
+          to="/publicaciones/crear"
+          className="btn btn-success mt-3 mb-3 ms-3"
+        >
+          Nueva Publicacion
+        </Link>
         <div className="row m-auto mt-4">{mostrarPublicaciones()}</div>
       </div>
     </>
