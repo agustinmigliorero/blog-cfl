@@ -5,6 +5,7 @@ import VerUsuarios from "./paginas/VerUsuarios";
 import VerPublicaciones from "./paginas/VerPublicaciones";
 import VerPublicacion from "./paginas/VerPublicacion";
 import CrearPublicacion from "./paginas/CrearPublicacion";
+import EditarPublicacion from "./paginas/EditarPublicacion";
 import IniciarSesion from "./paginas/IniciarSesion";
 import Navbar from "./componentes/Navbar";
 import VerUsuario from "./paginas/VerUsuario";
@@ -44,6 +45,10 @@ function App() {
               usuarioLogeado={usuarioLogeado}
             ></CrearPublicacion>
           }
+        ></Route>
+        <Route
+          path="/publicaciones/editar/:id"
+          element={<EditarPublicacion />}
         ></Route>
         <Route
           path="/publicaciones/:id"
