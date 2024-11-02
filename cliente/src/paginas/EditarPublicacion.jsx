@@ -46,12 +46,18 @@ function EditarPublicacion() {
         onSubmit={handleSubmit}
         className="d-flex flex-column align-items-center justify-content-center"
       >
+        <input />
         <input
           type="text"
           placeholder="Titulo"
           name="titulo"
           onChange={(e) => setTituloPublicacion(e.target.value)}
           value={tituloPublicacion}
+          style={{
+            fontSize: "32px",
+            fontFamily: "georgia",
+            fontStyle: "italic",
+          }}
         />
         <textarea
           type="text"

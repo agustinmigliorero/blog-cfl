@@ -4,7 +4,7 @@ import Card from "../componentes/Card";
 import RatingEstrellas from "../componentes/RatingEstrellas";
 
 function VerPublicacion({ usuarioLogeado }) {
-  const [publicacion, setPublicacion] = useState({ usuario: {} });
+  const [publicacion, setPublicacion] = useState({ usuario: {}, likes: [] });
   const [textoComentario, setTextoComentario] = useState("");
   const [puntuacionComentario, setPuntuacionComentario] = useState(5);
   const { id } = useParams();
@@ -74,6 +74,18 @@ function VerPublicacion({ usuarioLogeado }) {
     }
   };
 
+  const fetchDarMeGusta = () => {
+    fetch(`http://localhost:3000/api/publicaciones/${publicacion._id}/likes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    }).then((res) => {
+      fetchPublicacion();
+    });
+  };
+
   const mostrarComentarios = () => {
     if (publicacion.comentarios) {
       return publicacion.comentarios.map((comentario) => {
@@ -86,6 +98,7 @@ function VerPublicacion({ usuarioLogeado }) {
                 nombre: comentario.usuario.nombre,
                 id: comentario.usuario._id,
               }}
+              puntaje={comentario.puntuacion}
             ></Card>
           </div>
         );
@@ -118,6 +131,24 @@ function VerPublicacion({ usuarioLogeado }) {
           </Link>
         </h5>
         <p style={{ fontSize: "17px" }}>{publicacion.texto}</p>
+        {usuarioLogeado.logeado ? (
+          <p>
+            <button className="btn btn-primary" onClick={fetchDarMeGusta}>
+              {" "}
+              <i className="fas fa-thumbs-up"></i> Dar Me Gusta
+            </button>{" "}
+            <br />
+            Cantidad de me gustas: {publicacion.likes.length}
+          </p>
+        ) : (
+          <p>
+            Cantidad de me gustas: {publicacion.likes.length} <br />
+            <Link to={`/`} className="btn btn-primary">
+              Inicia sesion para poder dar me gusta
+            </Link>
+          </p>
+        )}
+        <hr />
         <h4 className="mb-4 mt-5">
           Puntuacion promedio: {calcularPromedioPuntaje()} / 5{" "}
           <span className="text-warning">★</span>

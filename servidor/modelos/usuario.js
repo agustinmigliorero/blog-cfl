@@ -8,6 +8,7 @@ const usuarioSchema = new mongoose.Schema({
   imagen: { type: String },
   publicaciones: [{ type: mongoose.Schema.Types.ObjectId, ref: "Publicacion" }],
   comentarios: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comentario" }],
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Publicacion" }],
 });
 
 module.exports = mongoose.model("Usuario", usuarioSchema);

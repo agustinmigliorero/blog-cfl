@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
-import { AuthProvider, useAuth } from "./useAuth";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./useAuth";
 import VerUsuarios from "./paginas/VerUsuarios";
 import VerPublicaciones from "./paginas/VerPublicaciones";
 import VerPublicacion from "./paginas/VerPublicacion";
@@ -9,9 +9,20 @@ import EditarPublicacion from "./paginas/EditarPublicacion";
 import IniciarSesion from "./paginas/IniciarSesion";
 import Navbar from "./componentes/Navbar";
 import VerUsuario from "./paginas/VerUsuario";
+import CardNuevo from "./componentes/CardNuevo";
+
+function RutaProtegidaUsuarioLogeado({ children }) {
+  const { usuarioLogeado, cargando } = useAuth();
+  if (cargando) {
+    return <h1>Cargando...</h1>;
+  } else if (!usuarioLogeado.logeado) {
+    return <Navigate to="/" />;
+  } else {
+    return children;
+  }
+}
 
 function App() {
-  const [usuarios, setUsuarios] = useState([]);
   const { usuarioLogeado, setUsuarioLogeado } = useAuth();
 
   return (
@@ -20,6 +31,7 @@ function App() {
         usuarioLogeado={usuarioLogeado}
         setUsuarioLogeado={setUsuarioLogeado}
       ></Navbar>
+
       <Routes>
         <Route
           path="/"
@@ -36,7 +48,11 @@ function App() {
 
         <Route
           path="/publicaciones"
-          element={<VerPublicaciones></VerPublicaciones>}
+          element={
+            <RutaProtegidaUsuarioLogeado>
+              <VerPublicaciones></VerPublicaciones>
+            </RutaProtegidaUsuarioLogeado>
+          }
         ></Route>
         <Route
           path="/publicaciones/crear"
