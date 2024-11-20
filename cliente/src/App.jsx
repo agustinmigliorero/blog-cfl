@@ -10,6 +10,7 @@ import IniciarSesion from "./paginas/IniciarSesion";
 import Navbar from "./componentes/Navbar";
 import VerUsuario from "./paginas/VerUsuario";
 import CardNuevo from "./componentes/CardNuevo";
+import { Toaster } from "react-hot-toast";
 
 function RutaProtegidaUsuarioLogeado({ children }) {
   const { usuarioLogeado, cargando } = useAuth();
@@ -73,6 +74,8 @@ function App() {
           }
         ></Route>
       </Routes>
+
+      <Toaster></Toaster>
     </>
   );
 }

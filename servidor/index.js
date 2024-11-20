@@ -99,6 +99,8 @@ app.use("/api/comentarios", rutasComentarios);
 
 //rutas
 
+//borrarComentarios();
+
 app.listen(3000, function () {
   console.log("Servidor abierto en puerto 3000");
 });

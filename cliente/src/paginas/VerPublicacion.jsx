@@ -87,6 +87,11 @@ function VerPublicacion({ usuarioLogeado }) {
   };
 
   const mostrarComentarios = () => {
+    if (!publicacion.comentarios || publicacion.comentarios.length <= 0) {
+      return (
+        <h2 className="text-center">No hay comentarios, se el primero!!</h2>
+      );
+    }
     if (publicacion.comentarios) {
       return publicacion.comentarios.map((comentario) => {
         return (
