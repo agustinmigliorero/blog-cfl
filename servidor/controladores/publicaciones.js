@@ -3,13 +3,18 @@ const Usuario = require("../modelos/usuario");
 const Comentario = require("../modelos/comentario");
 
 const crearPublicacion = async (req, res) => {
-  const { usuario, titulo, texto } = req.body;
-  const publicacion = new Publicacion({ usuario, titulo, texto });
-  await publicacion.save();
-  const usuarioActual = await Usuario.findById(publicacion.usuario);
-  usuarioActual.publicaciones.push(publicacion._id);
-  await usuarioActual.save();
-  res.json({ publicacion, mensaje: "Publicacion creada!" });
+  try {
+    const { usuario, titulo, texto } = req.body;
+    const publicacion = new Publicacion({ usuario, titulo, texto });
+    await publicacion.save();
+    const usuarioActual = await Usuario.findById(publicacion.usuario);
+    usuarioActual.publicaciones.push(publicacion._id);
+    await usuarioActual.save();
+    res.json({ publicacion, mensaje: "Publicacion creada!" });
+  } catch (error) {
+    console.log("Error en el controlador de crear publicaciones", error);
+    res.status(500).json({ error: "Error al crear publicacion" });
+  }
 };
 
 const verPublicaciones = async (req, res) => {

@@ -13,27 +13,37 @@ function CrearPublicacion({ usuarioLogeado }) {
     if (!validacion) {
       return;
     }
-    if (!usuarioLogeado.logeado) {
-      navigate("/");
-    }
+    // if (!usuarioLogeado.logeado) {
+    //   navigate("/");
+    // }
     fetch("http://localhost:3000/api/publicaciones", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({
         texto,
         titulo,
-        usuario: usuarioLogeado.usuario._id,
+        usuario: usuarioLogeado?.usuario?._id
+          ? usuarioLogeado?.usuario?._id
+          : null,
       }),
     })
       .then(function (res) {
-        console.log(res);
+        return res.json();
+      })
+      .then(function (data) {
+        if (data.error) {
+          toast.error(data.error);
+          // throw data.error;
+          return;
+        }
         toast.success("Publicacion creada con exito!");
         navigate("/publicaciones");
       })
-      .catch((res) => {
-        alert("Error al crear publicacion!");
+      .catch((error) => {
+        toast.error("Error al crear publicacion.", error);
       });
   };
 

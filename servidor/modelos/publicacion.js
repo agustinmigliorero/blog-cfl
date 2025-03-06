@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const publicacionSchema = new Schema({
   usuario: { type: Schema.Types.ObjectId, ref: "Usuario" },
-  titulo: String,
+  titulo: { type: String, require: true, minlength: 5 },
   texto: String,
   fechaCreacion: { type: Date, default: Date.now },
   fechaEdicion: { type: Date, default: Date.now },

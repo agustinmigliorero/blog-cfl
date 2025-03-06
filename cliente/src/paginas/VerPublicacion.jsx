@@ -86,31 +86,6 @@ function VerPublicacion({ usuarioLogeado }) {
     });
   };
 
-  const mostrarComentarios = () => {
-    if (!publicacion.comentarios || publicacion.comentarios.length <= 0) {
-      return (
-        <h2 className="text-center">No hay comentarios, se el primero!!</h2>
-      );
-    }
-    if (publicacion.comentarios) {
-      return publicacion.comentarios.map((comentario) => {
-        return (
-          <div key={comentario._id} className="mb-3">
-            <Card
-              titulo={comentario.publicacion.titulo}
-              texto={comentario.texto}
-              autor={{
-                nombre: comentario.usuario.nombre,
-                id: comentario.usuario._id,
-              }}
-              puntaje={comentario.puntuacion}
-            ></Card>
-          </div>
-        );
-      });
-    }
-  };
-
   function calcularPromedioPuntaje() {
     if (publicacion.comentarios) {
       let suma = 0;
@@ -163,7 +138,7 @@ function VerPublicacion({ usuarioLogeado }) {
           <h2 className="text-center mb-4">Comentarios</h2>
           {mostrarCajaComentario()}
           <br />
-          {mostrarComentarios()}
+          <MostrarComentarios comentarios={publicacion.comentarios} />
         </div>
       </div>
     </>
@@ -171,3 +146,45 @@ function VerPublicacion({ usuarioLogeado }) {
 }
 
 export default VerPublicacion;
+
+function MostrarComentarios({ comentarios }) {
+  if (!comentarios) {
+    return (
+      <div>
+        <h1 className="text-center mt-5">Cargando...</h1>
+      </div>
+    );
+  }
+
+  const mostrarComentarios = () => {
+    if (!comentarios || comentarios.length <= 0) {
+      return (
+        <h2 className="text-center">No hay comentarios, se el primero!!</h2>
+      );
+    }
+    if (comentarios) {
+      return comentarios.map((comentario) => {
+        return (
+          <div key={comentario._id} className="mb-3">
+            <Card
+              titulo={comentario.publicacion.titulo}
+              texto={comentario.texto}
+              autor={{
+                nombre: comentario.usuario.nombre,
+                id: comentario.usuario._id,
+              }}
+              puntaje={comentario.puntuacion}
+            ></Card>
+          </div>
+        );
+      });
+    }
+  };
+
+  return (
+    <div className="container mt-3">
+      <h1 className="text-center mt-3">Comentarios</h1>
+      <div className="row m-auto mt-4">{mostrarComentarios()}</div>
+    </div>
+  );
+}
